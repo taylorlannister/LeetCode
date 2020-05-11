@@ -29,7 +29,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(self.selfDividingNumbers(3, 22))
+        print(self.countPrimes(2))
         
     }
 
@@ -372,4 +372,62 @@ class ViewController: UIViewController {
 //    输出: 4
 //    解释: 小于 10 的质数一共有 4 个, 它们是 2, 3, 5, 7
     
+    func countPrimes(_ n: Int) -> Int {
+        
+        var times = 2
+        var PrimesArray:[Int] = []
+        var count = 0
+        
+        while times < n - 1 {
+            
+            times = times + 1
+            var isPrimes = true
+            var canDivByPrimes = false
+            var number = times
+            // 将质数存起来,后面的数先去除，可以减少循环次数
+            for Primes in PrimesArray {
+                if times%Primes == 0{
+                    canDivByPrimes = true
+                    isPrimes = false
+                    break
+                }
+            }
+            while number > 1 && canDivByPrimes == false{
+                
+                if times%number == 0 && times != number{
+                    isPrimes = false
+                }
+                number = number - 1
+            }
+            
+            if isPrimes {
+                count = count + 1
+                PrimesArray.append(times)
+            }
+        }
+        return count
+    }
+    
+    
+    
+    
+    
+//    1108. IP 地址无效化
+//    给你一个有效的 IPv4 地址 address，返回这个 IP 地址的无效化版本。
+//
+//    所谓无效化 IP 地址，其实就是用 "[.]" 代替了每个 "."。
+    func defangIPaddr(_ address: String) -> String {
+        var ans = ""
+        let dnsAddress = address
+        for char in dnsAddress{
+            
+            if char == "."{
+                ans.append("[.]")
+            }else{
+                ans.append(char)
+            }
+        }
+        return ans
+        // 其实就是遍历字符串替换元素
+    }
 }
