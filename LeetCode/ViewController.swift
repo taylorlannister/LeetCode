@@ -7,7 +7,11 @@
 //
 
 import UIKit
-
+func DLog<T>(_ message: T, file: String = #file, method: String = #function, line: Int = #line) {
+    #if DEBUG
+    print("<\((file as NSString).lastPathComponent) : \(line)>, \(method)\n\(message)")
+    #endif
+}
 class ViewController: UIViewController {
     
     struct StackG<Element> {
@@ -29,8 +33,14 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(self.countPrimes(2))
         
+//
+//        var node = ListNode.init(2)
+//        node.next = ListNode.init(3)
+//        node.next?.next = ListNode.init(4)
+//        node.next?.next = ListNode.init(5)
+//        print(reverseList(node.next)!)
+        DLog(self.isPowerOfTwo(18))
     }
 
 //       104. 二叉树的最大深度
@@ -430,4 +440,63 @@ class ViewController: UIViewController {
         return ans
         // 其实就是遍历字符串替换元素
     }
+    
+    func reverseList(_ head: ListNode?) -> ListNode? {
+
+    var pre: ListNode? = nil
+    var cur = head
+    var next: ListNode? = nil
+        ///  每次遍历拿到最后的一个节点
+        while cur != nil {
+            // 把下一个节点存起来
+            next = cur?.next
+            // 覆盖掉下一个节点
+            cur?.next = pre
+            // 把当前节点复制保存起来
+            pre = cur
+            //
+            cur = next
+        }
+        return pre
+    }
+    
+    func hammingWeight(_ n: Int) -> Int {
+        if n == 0 {
+            return 0
+        }
+        var ans:Int = 0
+        var n = n
+        while n>0 {
+            if n%2 == 1{
+                ans = ans + 1
+            }
+            n = n/2
+        }
+        return ans
+    }
+    //  递归可破
+    func isPowerOfTwo(_ n: Int) -> Bool {
+
+        if n == 0 {
+            return false
+        }
+        if n == 1{
+            return true
+        }
+        if n%2 == 1 {
+            return false
+        }
+        return isPowerOfTwo(n/2)
+    }
+    
+    func invertTree(_ root: TreeNode?) -> TreeNode? {
+        guard let root = root else { return nil }
+        let left = invertTree(root.left)
+        let right = invertTree(root.right)
+        root.left = right
+        root.right = left
+        return root
+    }
+    
+    
 }
