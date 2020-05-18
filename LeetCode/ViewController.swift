@@ -8,6 +8,15 @@
 
 import UIKit
 
+
+
+/// Debug时 打印数据 及当前文件名 所属方法名 代码所属行数
+func DLog<T>(_ message: T, file: String = #file, method: String = #function, line: Int = #line) {
+    #if DEBUG
+    print("<\((file as NSString).lastPathComponent) : \(line)>, \(method)\n\(message)")
+    #endif
+}
+
 class ViewController: UIViewController {
     
     struct StackG<Element> {
@@ -29,7 +38,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(self.countPrimes(2))
+
+        DLog(self.reverseVowels("hello"))
         
     }
 
@@ -374,42 +384,30 @@ class ViewController: UIViewController {
     
     func countPrimes(_ n: Int) -> Int {
         
-        var times = 2
-        var PrimesArray:[Int] = []
-        var count = 0
-        
-        while times < n - 1 {
-            
-            times = times + 1
-            var isPrimes = true
-            var canDivByPrimes = false
-            var number = times
-            // 将质数存起来,后面的数先去除，可以减少循环次数
-            for Primes in PrimesArray {
-                if times%Primes == 0{
-                    canDivByPrimes = true
-                    isPrimes = false
-                    break
-                }
-            }
-            while number > 1 && canDivByPrimes == false{
+        var ans = 0
+        var isPrimesArray = [Bool](repeating: true, count: n)
+        var i = 2
+        let number = n
+        while  i < number{
+            if (isPrimesArray[i]){
+            let index = i
+            var sortNumber = 1
+            while  sortNumber < index{
+              
+                sortNumber = 2*index
+                isPrimesArray[sortNumber] = false
                 
-                if times%number == 0 && times != number{
-                    isPrimes = false
-                }
-                number = number - 1
             }
-            
-            if isPrimes {
-                count = count + 1
-                PrimesArray.append(times)
+            i = i+1
+        }
+        }
+        for isPrime in isPrimesArray{
+            if isPrime {
+                ans = ans + 1
             }
         }
-        return count
+        return ans
     }
-    
-    
-    
     
     
 //    1108. IP 地址无效化
@@ -429,5 +427,129 @@ class ViewController: UIViewController {
         }
         return ans
         // 其实就是遍历字符串替换元素
+    }
+//    面试题05. 替换空格    请实现一个函数，把字符串 s 中的每个空格替换成"%20"。
+    func replaceSpace(_ s: String) -> String {
+        var ansStr = ""
+        for char in s {
+             if char == " "{
+                 ansStr.append("%20")
+             }else{
+                 ansStr.append(char)
+             }
+         }
+        return ansStr
+    }
+    
+//    面试题39. 数组中出现次数超过一半的数字
+//    数组中有一个数字出现的次数超过数组长度的一半，请找出这个数字。
+//    你可以假设数组是非空的，并且给定的数组总是存在多数元素。
+    
+    
+    func majorityElement(_ nums: [Int]) -> Int {
+
+        var number = nums
+        var length = nums.count
+        number = number.sorted()
+        return number[length/2]
+    }
+    
+    
+    func reversePrint(_ head: ListNode?) -> [Int] {
+
+        var ans:[Int] = []
+        var head = head
+        while head != nil {
+            ans.append(head?.val ?? 0)
+            head = head?.next
+        }
+        return ans.reversed()
+    }
+    
+    func toLowerCase(_ str: String) -> String {
+        
+        var ans = ""
+        let inputStr = str
+        for char in inputStr{
+            if char > "A" || char < "Z"{
+                ans.append(char.lowercased())
+            }
+            ans.append(char)
+        }
+        return str.lowercased()
+    }
+    
+    func levelOrder(_ root: TreeNode?) -> [[Int]] {
+       
+        var leftNode: TreeNode?
+        var rightNode: TreeNode?
+        var nodeArray:[TreeNode?] = []
+        var ansArray:[[Int]] = []
+        nodeArray.append(root)
+        ansArray.append([root!.val])
+        for node in nodeArray {
+            
+        var sectionArray: [Int] = []
+        var sectionNodeArray:[TreeNode?] = []
+        leftNode = root?.left
+        rightNode = root?.right
+        sectionNodeArray.append(leftNode)
+        sectionNodeArray.append(rightNode)
+    }
+        return [[1]]
+    }
+    
+    func levelOrder(_ root: TreeNode?) -> [Int] {
+        
+        var leftNode: TreeNode?
+        var rightNode: TreeNode?
+        return [leftNode!.val,rightNode!.val]
+        
+    }
+    
+    func reverseString(_ s: inout [Character]) {
+        
+      var first = 0
+      var last = s.count - 1
+        while first < last {
+            s.swapAt(first, last)
+            first = first + 1
+            last = last - 1
+        }
+    }
+    
+
+    func reverseVowels(_ s: String) -> String {
+        
+        var firstE = 0
+        var lastE = s.count - 1
+        let s = s
+        var array = [String](repeating: "", count: s.count)
+        var ans = ""
+        
+        while firstE < lastE {
+            
+            if self.isvowl(String(s.first!)) && self.isvowl(String(s.last!)){
+                array[firstE] = String(s.lastE!)
+                array[lastE] = String(s.firstE!)
+            }else{
+                array[lastE] = String(s.firstE!)
+                array[firstE] = String(s.lastE!)
+            }
+            firstE = firstE + 1
+            lastE = lastE - 1
+        }
+        for char in array {
+            ans.append(char)
+        }
+        return ans
+    }
+    
+    func isvowl(_ s: String) -> Bool {
+        let array = ["a","e","i","o","u","A","E","I","O","U"]
+            if array.contains(s){
+                return true
+            }
+        return false
     }
 }
