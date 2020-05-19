@@ -596,4 +596,43 @@ class ViewController: UIViewController {
      }
 //    1309. 解码字母到整数映射
     
+    func freqAlphabets(_ s: String) -> String {
+        var s = s
+        var  ansChar = ""
+        var decodeStr = ""
+        for (index, char)in s.enumerated() {
+            if (char != "#"){
+                decodeStr.append(char)
+            }
+            
+            
+        }
+        
+        return ansChar
+    }
+//    657. 机器人能否返回原点
+    func judgeCircle(_ moves: String) -> Bool {
+        var lCount:Int = 0
+        var rCount:Int = 0
+        var uCount:Int = 0
+        var dCount:Int = 0
+        for char in moves {
+            if "\(char)" == "L"{
+                lCount = lCount + 1
+            }
+            if "\(char)" == "R"{
+                rCount = rCount + 1
+            }
+            if "\(char)" == "U"{
+                uCount = uCount + 1
+            }
+            if "\(char)" == "D"{
+                dCount = dCount + 1
+            }
+        }
+        return (lCount == rCount && uCount == dCount)
+    }
+    
+    
+
 }
