@@ -42,7 +42,7 @@ class ViewController: UIViewController {
         //        node.next?.next = ListNode.init(4)
         //        node.next?.next = ListNode.init(5)
         //        print(reverseList(node.next)!)
-        DLog(self.isPowerOfTwo(18))
+        DLog(isUnique("abcdee"))
     }
     
     //       104. 二叉树的最大深度
@@ -632,7 +632,39 @@ class ViewController: UIViewController {
         }
         return (lCount == rCount && uCount == dCount)
     }
+//    利用set的唯一性
+    func isUnique(_ astr: String) -> Bool {
+        return Set<Character>(astr).count == astr.count
+    }
     
+//    1450. 在既定时间做作业的学生人数
+    func busyStudent(_ startTime: [Int], _ endTime: [Int], _ queryTime: Int) -> Int {
+        var count = 0
+        for(index,number) in startTime.enumerated(){
+            if endTime[index] > queryTime && queryTime > startTime[index]{
+                count = count + 1
+            }
+        }
+        return count
+    }
     
-
+    func deleteNode(_ node: ListNode?) {
+        node?.val = node?.next?.val ?? 0
+        node?.next = node?.next?.next
+    }
+     // 每一个字符转换之后拼接到Set里面去除重复
+    func uniqueMorseRepresentations(_ words: [String]) -> Int {
+        let set = [".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."];
+        var result = Set<String>()
+        words.map {
+            var s = ""
+            $0.map{
+                //ASCII数值 a为97
+                s.append(set[Int($0.asciiValue!-97)])
+            }
+            result.insert(s)
+        }
+        return result.count
+    }
+    
 }
