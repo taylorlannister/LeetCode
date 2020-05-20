@@ -42,7 +42,9 @@ class ViewController: UIViewController {
         //        node.next?.next = ListNode.init(4)
         //        node.next?.next = ListNode.init(5)
         //        print(reverseList(node.next)!)
-        DLog(isUnique("abcdee"))
+//        DLog(isUnique("abcdee"))
+        DLog(flipAndInvertImage([[1,1,0],[1,0,1],[0,0,0]]))
+        
     }
     
     //       104. 二叉树的最大深度
@@ -666,5 +668,30 @@ class ViewController: UIViewController {
         }
         return result.count
     }
+//    832. 翻转图像
+    func flipAndInvertImage(_ A: [[Int]]) -> [[Int]] {
+        let A = A
+        var ansArray: [[Int]] = []
+        for array in A{
+            var n = 0
+            var tempArray = array
+            var tempValue = -1
+            while tempArray.count/2 > n{
+                tempValue = tempArray[n]^1
+                tempArray[n] = tempArray[tempArray.count-1-n]^1
+                tempArray[tempArray.count-1-n] = tempValue
+                n = n+1
+            }
+            if tempArray.count%2 == 1{
+                tempArray[tempArray.count/2] = tempArray[tempArray.count/2]^1
+            }
+            ansArray.append(tempArray)
+        }
+        return ansArray
+    }
     
+//    1122. 数组的相对排序
+//    func relativeSortArray(_ arr1: [Int], _ arr2: [Int]) -> [Int] {
+//        
+//    }
 }
