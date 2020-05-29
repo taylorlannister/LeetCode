@@ -44,7 +44,7 @@ class ViewController: UIViewController {
         //        print(reverseList(node.next)!)
 //        DLog(isUnique("abcdee"))
         DLog(flipAndInvertImage([[1,1,0],[1,0,1],[0,0,0]]))
-        
+        self.freqAlphabets("abcd")
     }
     
     //       104. 二叉树的最大深度
@@ -599,18 +599,22 @@ class ViewController: UIViewController {
 //    1309. 解码字母到整数映射
     
     func freqAlphabets(_ s: String) -> String {
-        var s = s
-        var  ansChar = ""
-        var decodeStr = ""
-        for (index, char)in s.enumerated() {
-            if (char != "#"){
-                decodeStr.append(char)
-            }
-            
-            
+        let reverString = s.reversed()
+        var  ansString = ""
+        var charArray:[String] = []
+        for char in reverString{
+            charArray.append("\(char)")
         }
         
-        return ansChar
+        for (index,char) in charArray.enumerated(){
+                
+            if char == "#"{
+//                var temp = Int(charArray[index+1]!) + Int(charArray[index+2]!)*10
+                
+            }
+            
+        }
+        return ansString
     }
 //    657. 机器人能否返回原点
     func judgeCircle(_ moves: String) -> Bool {
@@ -694,4 +698,116 @@ class ViewController: UIViewController {
 //    func relativeSortArray(_ arr1: [Int], _ arr2: [Int]) -> [Int] {
 //        
 //    }
+//    面试题25. 合并两个排序的链表
+//    简单递归可破
+    func mergeTwoLists(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
+        if l1 == nil{
+            return l2
+        }
+        if l2 == nil{
+            return l1
+        }
+        else {
+            l2?.next = mergeTwoLists(l1, l2?.next)
+            return l2
+        }
+    }
+    
+    func heightChecker(_ heights: [Int]) -> Int {
+        var ans = 0
+        for (i,v) in heights.sorted().enumerated() {
+            if v != heights[i]{
+                ans += 1
+            }
+        }
+        return ans
+    }
+
+    func sortedSquares(_ A: [Int]) -> [Int] {
+        var ansArray:[Int] = []
+        var A = A
+        for element in A{
+            ansArray.append(element*element)
+        }
+        ansArray.sort()
+        return ansArray
+    }
+    // 先排序， 再取奇数位元素想家
+   func arrayPairSum(_ nums: [Int]) -> Int {
+       var nums = nums.sorted()
+       var ans = 0
+    for (index, num) in nums.enumerated(){
+        if index%2 == 0{
+            ans += num
+        }
+       }
+       return ans
+    }
+    
+//    func reverseWords(_ s: String) -> String {
+//        if s == "" { return s }
+//        var result = ""
+//        var arr = s.split(separator: " ")
+//        arr.forEach {
+//            result += String($0.reversed())
+//            result += " "
+//        }
+//        result.removeLast()
+//        return result
+//    }
+    
+    func reverseWords(_ s: String) -> String {
+        if s == "" {
+             return s
+        }
+        var result = ""
+        let arr = s.split(separator:" ")
+        arr.forEach{
+            result += String($0.reversed())
+            result += " "
+        }
+        return result
+    }
+    
+    
+    func luckyNumbers (_ matrix: [[Int]]) -> [Int] {
+        
+        
+        var min:Int = 0
+        var minArray:[Int] = []
+        
+        var count = matrix.count
+        
+        while count > 0{
+            let array = matrix[count]
+            var maxArray:[Int] = []
+            
+            for(index,element) in array.enumerated(){
+                var max:Int = 0
+                if element > max{
+                    max = element
+                }
+                maxArray.append(max)
+            }
+            
+            
+            
+            
+            
+            
+            
+            
+            count -= 1
+            
+            
+            
+        }
+        
+        
+        
+        
+        
+        return [0]
+    }
+    
 }
