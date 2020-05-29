@@ -43,7 +43,7 @@ class ViewController: UIViewController {
         //        node.next?.next = ListNode.init(5)
         //        print(reverseList(node.next)!)
 //        DLog(isUnique("abcdee"))
-        DLog(flipAndInvertImage([[1,1,0],[1,0,1],[0,0,0]]))
+        
         self.freqAlphabets("abcd")
     }
     
@@ -611,6 +611,13 @@ class ViewController: UIViewController {
             if char == "#"{
 //                var temp = Int(charArray[index+1]!) + Int(charArray[index+2]!)*10
                 
+        var s = s
+        var  ansChar = ""
+        var decodeStr = ""
+        
+        for (index, char)in s.enumerated() {
+            if (char != "#"){
+                decodeStr.append(char)
             }
             
         }
@@ -718,6 +725,42 @@ class ViewController: UIViewController {
         for (i,v) in heights.sorted().enumerated() {
             if v != heights[i]{
                 ans += 1
+    }
+        }
+    
+//    1221. 分割平衡字符串
+//    在一个「平衡字符串」中，'L' 和 'R' 字符的数量是相同的。
+//
+//    给出一个平衡字符串 s，请你将它分割成尽可能多的平衡字符串。
+//
+//    返回可以通过分割得到的平衡字符串的最大数量。
+    //    示例 1：
+//    输入：s = "RLRRLLRLRL"
+//    输出：4
+//    解释：s 可以分割为 "RL", "RRLL", "RL", "RL", 每个子字符串中都包含相同数量的 'L' 和 'R'。
+    //    示例 2：
+//    输入：s = "RLLLLRRRLR"
+//    输出：3
+//    解释：s 可以分割为 "RL", "LLLRRR", "LR", 每个子字符串中都包含相同数量的 'L' 和 'R'。
+//    示例 3：
+//
+//    输入：s = "LLLLRRRR"
+//    输出：1
+//    解释：s 只能保持原样 "LLLLRRRR".
+    func balancedStringSplit(_ s: String) -> Int {
+//  栈的思维去解决就好
+        let s = s
+        var ans = 0
+        var leftCount = 0
+        for char in s {
+            if char == "L" {
+                leftCount = leftCount + 1
+            }
+            if char == "R" {
+                leftCount = leftCount - 1
+            }
+            if leftCount == 0{
+                ans = ans + 1
             }
         }
         return ans
@@ -810,4 +853,47 @@ class ViewController: UIViewController {
         return [0]
     }
     
+//    1370. 上升下降字符串
+//    给你一个字符串 s ，请你根据下面的算法重新构造字符串：
+//    从 s 中选出 最小 的字符，将它 接在 结果字符串的后面。
+//    从 s 剩余字符中选出 最小 的字符，且该字符比上一个添加的字符大，将它 接在 结果字符串后面。
+//    重复步骤 2 ，直到你没法从 s 中选择字符。
+//    从 s 中选出 最大 的字符，将它 接在 结果字符串的后面。
+//    从 s 剩余字符中选出 最大 的字符，且该字符比上一个添加的字符小，将它 接在 结果字符串后面。
+//    重复步骤 5 ，直到你没法从 s 中选择字符。
+//    重复步骤 1 到 6 ，直到 s 中所有字符都已经被选过。
+//    在任何一步中，如果最小或者最大字符不止一个 ，你可以选择其中任意一个，并将其添加到结果字符串。
+//    请你返回将 s 中字符重新排序后的 结果字符串 。
+//    示例 1：
+//    输入：s = "aaaabbbbcccc"
+//    输出："abccbaabccba"
+//    解释：第一轮的步骤 1，2，3 后，结果字符串为 result = "abc"
+//    第一轮的步骤 4，5，6 后，结果字符串为 result = "abccba"
+//    第一轮结束，现在 s = "aabbcc" ，我们再次回到步骤 1
+//    第二轮的步骤 1，2，3 后，结果字符串为 result = "abccbaabc"
+//    第二轮的步骤 4，5，6 后，结果字符串为 result = "abccbaabccba"
+
+    func sortString(_ s: String) -> String {
+        //题解:首先桶排序统计次数，再然后遍历拼接就好了
+        let s = s
+        var timesArray = [Int](repeating: 0, count: 26)
+        var ans = ""
+        for char in s{
+            timesArray[Int(char.asciiValue!) - 97] += 1
+        }
+        var needReserve = false
+        while ans.count < s.count {
+            var tempStr = ""
+            for(index,number) in timesArray.enumerated(){
+                if number > 0{
+                    timesArray[index] -= 1
+                    let char = Character(Unicode.Scalar(index + 97)!)
+                    tempStr.append(char)
+                }
+            }
+            (needReserve == true) ? (ans.append(String(tempStr.reversed()))) : (ans.append(tempStr))
+            needReserve = !needReserve
+        }
+        return ans
+        }
 }
