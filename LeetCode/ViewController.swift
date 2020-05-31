@@ -44,7 +44,7 @@ class ViewController: UIViewController {
         //        print(reverseList(node.next)!)
 //        DLog(isUnique("abcdee"))
         
-        self.freqAlphabets("abcd")
+        DLog(self.minSubsequence([4,3,10,9,8]))
     }
     
     //       104. 二叉树的最大深度
@@ -815,29 +815,41 @@ class ViewController: UIViewController {
         return result
     }
     
-    
+//    1380. 矩阵中的幸运数
     func luckyNumbers (_ matrix: [[Int]]) -> [Int] {
-        
-        
-        var min:Int = 0
+        var count = 0
+        var ansArray:[Int] = []
+//        var ansArray = Set<Int>()
         var minArray:[Int] = []
-        
-        var count = matrix.count
-        
-        while count > 0{
-            let array = matrix[count]
-            var maxArray:[Int] = []
-            
-            for(index,element) in array.enumerated(){
-                var max:Int = 0
-                if element > max{
-                    max = element
+        var minIndex = 0
+        var indexArray:[Int] = []
+        while count < matrix.count{
+            var min:Int = 0
+            for(index,element) in matrix[count].enumerated(){
+                if index == 0 {
+                    min = element
+                    minIndex = 0
                 }
-                maxArray.append(max)
+                if element < min{
+                    min = element
+                    minIndex = index
+                }
             }
-            count -= 1
+//            minArray.append(min)
+//            indexArray.append(minIndex)
+            var isMax: Bool = true
+            for(index,tempArray) in matrix.enumerated(){
+                
+                if tempArray[minIndex] > min{
+                    isMax = false
+                }
+            }
+            if isMax{
+                ansArray.append(min)
+            }
+            count += 1
         }
-        return [0]
+        return Array(ansArray)
     }
     
 //    1370. 上升下降字符串
@@ -885,4 +897,73 @@ class ViewController: UIViewController {
     }
             
             
+    func generateTheString(_ n: Int) -> String {
+        var time = n
+        var ans = ""
+        var k = 0
+        if n%2 == 0{
+            k = 1
+        }
+        while time>k {
+            ans.append("a")
+            time = time - 1
+        }
+        if n%2 == 0{
+            ans.append("b")
+        }
+        return ans
+    }
+//    852. 山脉数组的峰顶索引
+// 题解：其实就是找最大值，把下标拿出来。 二分法其实也不错
+    func peakIndexInMountainArray(_ A: [Int]) -> Int {
+        
+        let array = A.sorted()
+        let max = array.last
+        for (index,element) in A.enumerated(){
+            if element == max{
+                return index
+            }
+        }
+        return 0
+    }
+    
+//    1403. 非递增顺序的最小子序列
+//    运用了sorted偷懒， 否则应该是一边排序。一边相加进行判断
+    func minSubsequence(_ nums: [Int]) -> [Int] {
+        
+        var count = 0
+        var ansArray:[Int] = []
+        var tempArray = nums.sorted().reversed()
+        for (index,element) in nums.enumerated() {
+            count += element
+        }
+        var combine = 0
+        for (index,element) in tempArray.enumerated() {
+            combine += element
+            if combine > count - combine{
+                ansArray.append(element)
+                return ansArray
+            }else{
+                ansArray.append(element)
+            }
+        }
+        return ansArray
+    }
+//    292. Nim 游戏  余n的思路可以解决
+    func canWinNim(_ n: Int) -> Bool {
+        return (n%4 == 0) ? false : true
+    }
+//    559. N叉树的最大深度
+//    给定一个 N 叉树，找到其最大深度。
+//    最大深度是指从根节点到最远叶子节点的最长路径上的节点总数。
+//    例如，给定一个 3叉树 :
+    func maxDepth(_ root: Node?) -> Int {
+        guard let root = root else {return 0}
+        var ans:Int = 0
+        for child in root.children {
+            ans = max(ans, maxDepth(child))
+        }
+        return ans + 1
+    }
+    
 }
