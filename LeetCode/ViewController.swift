@@ -608,7 +608,7 @@ class ViewController: UIViewController {
         
         for (index,char) in charArray.enumerated(){
                 
-            if char == "#"{
+//            if char == "#"{
 //                var temp = Int(charArray[index+1]!) + Int(charArray[index+2]!)*10
                 
         var s = s
@@ -619,8 +619,9 @@ class ViewController: UIViewController {
             if (char != "#"){
                 decodeStr.append(char)
             }
-            
         }
+//        return ansString
+    }
         return ansString
     }
 //    657. 机器人能否返回原点
@@ -713,8 +714,7 @@ class ViewController: UIViewController {
         }
         if l2 == nil{
             return l1
-        }
-        else {
+        }else {
             l2?.next = mergeTwoLists(l1, l2?.next)
             return l2
         }
@@ -725,8 +725,10 @@ class ViewController: UIViewController {
         for (i,v) in heights.sorted().enumerated() {
             if v != heights[i]{
                 ans += 1
-    }
+            }
         }
+        return 0
+    }
     
 //    1221. 分割平衡字符串
 //    在一个「平衡字符串」中，'L' 和 'R' 字符的数量是相同的。
@@ -809,6 +811,7 @@ class ViewController: UIViewController {
             result += String($0.reversed())
             result += " "
         }
+        result.removeLast()
         return result
     }
     
@@ -832,24 +835,8 @@ class ViewController: UIViewController {
                 }
                 maxArray.append(max)
             }
-            
-            
-            
-            
-            
-            
-            
-            
             count -= 1
-            
-            
-            
         }
-        
-        
-        
-        
-        
         return [0]
     }
     
@@ -895,5 +882,7 @@ class ViewController: UIViewController {
             needReserve = !needReserve
         }
         return ans
-        }
+    }
+            
+            
 }
