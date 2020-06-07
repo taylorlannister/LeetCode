@@ -16,6 +16,7 @@
 		34FE145F23E5499300C60FB4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 34FE145D23E5499300C60FB4 /* LaunchScreen.storyboard */; };
 		34FE146A23E5499300C60FB4 /* LeetCodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FE146923E5499300C60FB4 /* LeetCodeTests.swift */; };
 		34FE147523E5499300C60FB4 /* LeetCodeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FE147423E5499300C60FB4 /* LeetCodeUITests.swift */; };
+		BDCAA03524810740001F3B90 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCAA03424810740001F3B90 /* Node.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		34FE147023E5499300C60FB4 /* LeetCodeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LeetCodeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		34FE147423E5499300C60FB4 /* LeetCodeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeetCodeUITests.swift; sourceTree = "<group>"; };
 		34FE147623E5499300C60FB4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BDCAA03424810740001F3B90 /* Node.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +107,7 @@
 				34FE145623E5499200C60FB4 /* ViewController.swift */,
 				347451CB2467AC5C001BB66B /* ListNode.swift */,
 				347451CD2467AC6D001BB66B /* TreeNode.swift */,
+				BDCAA03424810740001F3B90 /* Node.swift */,
 				34FE145823E5499200C60FB4 /* Main.storyboard */,
 				34FE145B23E5499300C60FB4 /* Assets.xcassets */,
 				34FE145D23E5499300C60FB4 /* LaunchScreen.storyboard */,
@@ -263,6 +266,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				34FE145723E5499200C60FB4 /* ViewController.swift in Sources */,
+				BDCAA03524810740001F3B90 /* Node.swift in Sources */,
 				34FE145523E5499200C60FB4 /* AppDelegate.swift in Sources */,
 				347451CC2467AC5C001BB66B /* ListNode.swift in Sources */,
 				347451CE2467AC6D001BB66B /* TreeNode.swift in Sources */,

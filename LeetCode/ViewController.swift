@@ -43,8 +43,8 @@ class ViewController: UIViewController {
         //        node.next?.next = ListNode.init(5)
         //        print(reverseList(node.next)!)
 //        DLog(isUnique("abcdee"))
-        DLog(flipAndInvertImage([[1,1,0],[1,0,1],[0,0,0]]))
         
+        DLog(self.minSubsequence([4,3,10,9,8]))
     }
     
     //       104. 二叉树的最大深度
@@ -599,6 +599,18 @@ class ViewController: UIViewController {
 //    1309. 解码字母到整数映射
     
     func freqAlphabets(_ s: String) -> String {
+        let reverString = s.reversed()
+        var  ansString = ""
+        var charArray:[String] = []
+        for char in reverString{
+            charArray.append("\(char)")
+        }
+        
+        for (index,char) in charArray.enumerated(){
+                
+//            if char == "#"{
+//                var temp = Int(charArray[index+1]!) + Int(charArray[index+2]!)*10
+                
         var s = s
         var  ansChar = ""
         var decodeStr = ""
@@ -607,11 +619,10 @@ class ViewController: UIViewController {
             if (char != "#"){
                 decodeStr.append(char)
             }
-            
-            
         }
-        
-        return ansChar
+//        return ansString
+    }
+        return ansString
     }
 //    657. 机器人能否返回原点
     func judgeCircle(_ moves: String) -> Bool {
@@ -691,10 +702,15 @@ class ViewController: UIViewController {
         return ansArray
     }
     
-//    1122. 数组的相对排序
-//    func relativeSortArray(_ arr1: [Int], _ arr2: [Int]) -> [Int] {
-//        
-//    }、
+    func heightChecker(_ heights: [Int]) -> Int {
+        var ans = 0
+        for (i,v) in heights.sorted().enumerated() {
+            if v != heights[i]{
+                ans += 1
+            }
+        }
+        return 0
+    }
     
 //    1221. 分割平衡字符串
 //    在一个「平衡字符串」中，'L' 和 'R' 字符的数量是相同的。
@@ -733,6 +749,91 @@ class ViewController: UIViewController {
         }
         return ans
     }
+
+    func sortedSquares(_ A: [Int]) -> [Int] {
+        var ansArray:[Int] = []
+        var A = A
+        for element in A{
+            ansArray.append(element*element)
+        }
+        ansArray.sort()
+        return ansArray
+    }
+    // 先排序， 再取奇数位元素想家
+   func arrayPairSum(_ nums: [Int]) -> Int {
+       var nums = nums.sorted()
+       var ans = 0
+    for (index, num) in nums.enumerated(){
+        if index%2 == 0{
+            ans += num
+        }
+       }
+       return ans
+    }
+    
+//    func reverseWords(_ s: String) -> String {
+//        if s == "" { return s }
+//        var result = ""
+//        var arr = s.split(separator: " ")
+//        arr.forEach {
+//            result += String($0.reversed())
+//            result += " "
+//        }
+//        result.removeLast()
+//        return result
+//    }
+    
+    func reverseWords(_ s: String) -> String {
+        if s == "" {
+             return s
+        }
+        var result = ""
+        let arr = s.split(separator:" ")
+        arr.forEach{
+            result += String($0.reversed())
+            result += " "
+        }
+        result.removeLast()
+        return result
+    }
+    
+//    1380. 矩阵中的幸运数
+    func luckyNumbers (_ matrix: [[Int]]) -> [Int] {
+        var count = 0
+        var ansArray:[Int] = []
+//        var ansArray = Set<Int>()
+        var minArray:[Int] = []
+        var minIndex = 0
+        var indexArray:[Int] = []
+        while count < matrix.count{
+            var min:Int = 0
+            for(index,element) in matrix[count].enumerated(){
+                if index == 0 {
+                    min = element
+                    minIndex = 0
+                }
+                if element < min{
+                    min = element
+                    minIndex = index
+                }
+            }
+//            minArray.append(min)
+//            indexArray.append(minIndex)
+            var isMax: Bool = true
+            for(index,tempArray) in matrix.enumerated(){
+                
+                if tempArray[minIndex] > min{
+                    isMax = false
+                }
+            }
+            if isMax{
+                ansArray.append(min)
+            }
+            count += 1
+        }
+        return Array(ansArray)
+    }
+    
 //    1370. 上升下降字符串
 //    给你一个字符串 s ，请你根据下面的算法重新构造字符串：
 //    从 s 中选出 最小 的字符，将它 接在 结果字符串的后面。
@@ -776,7 +877,6 @@ class ViewController: UIViewController {
         }
         return ans
     }
-    
 //    面试题25. 合并两个排序的链表
 //    输入两个递增排序的链表，合并这两个链表并使新链表中的节点仍然是递增排序的。
 //
@@ -799,10 +899,144 @@ class ViewController: UIViewController {
             return l2
         }
     }
-    
-    
-    
+    func generateTheString(_ n: Int) -> String {
+        var time = n
+        var ans = ""
+        var k = 0
+        if n%2 == 0{
+            k = 1
+        }
+        while time>k {
+            ans.append("a")
+            time = time - 1
+        }
+        if n%2 == 0{
+            ans.append("b")
+        }
+        return ans
+    }
+//    852. 山脉数组的峰顶索引
+// 题解：其实就是找最大值，把下标拿出来。 二分法其实也不错
+    func peakIndexInMountainArray(_ A: [Int]) -> Int {
         
+        let array = A.sorted()
+        let max = array.last
+        for (index,element) in A.enumerated(){
+            if element == max{
+                return index
+            }
+        }
+        return 0
+    }
     
+//    1403. 非递增顺序的最小子序列
+//    运用了sorted偷懒， 否则应该是一边排序。一边相加进行判断
+    func minSubsequence(_ nums: [Int]) -> [Int] {
+        
+        var count = 0
+        var ansArray:[Int] = []
+        var tempArray = nums.sorted().reversed()
+        for (index,element) in nums.enumerated() {
+            count += element
+        }
+        var combine = 0
+        for (index,element) in tempArray.enumerated() {
+            combine += element
+            if combine > count - combine{
+                ansArray.append(element)
+                return ansArray
+            }else{
+                ansArray.append(element)
+            }
+        }
+        return ansArray
+    }
+//    292. Nim 游戏  余n的思路可以解决
+    func canWinNim(_ n: Int) -> Bool {
+        return (n%4 == 0) ? false : true
+    }
+//    559. N叉树的最大深度
+//    给定一个 N 叉树，找到其最大深度。
+//    最大深度是指从根节点到最远叶子节点的最长路径上的节点总数。
+//    例如，给定一个 3叉树 :
+    func maxDepth(_ root: Node?) -> Int {
+        guard let root = root else {return 0}
+        var ans:Int = 0
+        for child in root.children {
+            ans = max(ans, maxDepth(child))
+        }
+        return ans + 1
+    }
+    
+//    349. 两个数组的交集
+    
+    func intersection(_ nums1: [Int], _ nums2: [Int]) -> [Int] {
+        var ansSet = Set<Int>()
+        for element in nums1 {
+            if nums2.contains(element){
+                ansSet.insert(element)
+                
+            }
+        }
+        return Array(ansSet)
+    }
+    
+//    350. 两个数组的交集 II
+    
+    func intersect(_ nums1: [Int], _ nums2: [Int]) -> [Int] {
+        var ansArray:[Int] = []
+        let firstArray = nums1.sorted()
+        let lastArray = nums2.sorted()
+        var i = 0
+        var j = 0
+        while (i < firstArray.count && j < lastArray.count) {
+            if firstArray[i] < lastArray[j] {
+                i += 1
+            }else if firstArray[i] > lastArray[j]{
+                j += 1
+            }else{
+                ansArray.append(firstArray[i])
+                i += 1
+                j += 1
+            }
+        }
+        return ansArray
+    }
+    
+//    1002. 查找常用字符
+    
+
+    
+    func commonChars(_ A: [String]) -> [String] {
+        var result:[String] = []
+        var chars = Set(A[0])
+        var a = A
+        var isFind = true
+        var count = 100
+        var findIndex = "".startIndex
+        for i in 1..<A.count{
+            chars = chars.intersection(A[i])
+        }
+        while count>0 {
+            count = 0
+            for item in chars {
+                isFind = true
+                for i in 0..<a.count {
+                    if a[i].contains(item) {
+                        findIndex = a[i].firstIndex(of: item)!
+                        a[i].remove(at: findIndex)
+                    }else{
+                        isFind = false
+                        break
+                    }
+                }
+                if isFind {
+                    result.append(String(item))
+                    count += 1
+                }
+            }
+        }
+        return result
+    }
     
 }
