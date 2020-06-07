@@ -776,4 +776,33 @@ class ViewController: UIViewController {
         }
         return ans
     }
+    
+//    面试题25. 合并两个排序的链表
+//    输入两个递增排序的链表，合并这两个链表并使新链表中的节点仍然是递增排序的。
+//
+//    示例1：
+//    输入：1->2->4, 1->3->4
+//    输出：1->1->2->3->4->4
+    
+    func mergeTwoLists(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
+        
+        var ansList:ListNode?
+        guard let l1 = l1 else { return l2 }
+        guard let l2 = l2 else { return l1 }
+
+        if Int(l1.val ?? 0) < Int(l2.val ?? 0){
+            
+           l1.next = mergeTwoLists(l1.next, l2)
+           return l1
+        }else{
+            l2.next = mergeTwoLists(l1, l2.next)
+            return l2
+        }
+    }
+    
+    
+    
+        
+    
+    
 }
