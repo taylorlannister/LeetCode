@@ -46,7 +46,7 @@ class ViewController: UIViewController {
         
 //        DLog(uniqueOccurrences([-3,0,1,-3,1,1,1,-3,10,0]))
         
-        DLog(self.countCharacters(["cat","bt","hat","tree"], "atach"))
+        DLog(self.findComplement(5))
     }
     
     //       104. 二叉树的最大深度
@@ -1230,5 +1230,29 @@ class ViewController: UIViewController {
         }
         return results
     }
+//    476. 数字的补数
+//    给定一个正整数，输出它的补数。补数是对该数的二进制表示取反。
     
+    func findComplement(_ num: Int) -> Int {
+        var contentNum = num
+        var result = 0
+        while contentNum > 0{
+            contentNum = contentNum>>1
+            result = (result << 1) + 1
+        }
+        return result^num
+    }
+//    521. 最长特殊序列 Ⅰ
+//    func findLUSlength(_ a: String, _ b: String) -> Int {
+//        
+//        let result = min(a.count, b.count)
+//        var sortStr = min(a, b)
+//        var a = a
+//        var times = 0
+//        while times < a.count{
+//            
+//            
+//        }
+//        return  result
+//    }
 }
