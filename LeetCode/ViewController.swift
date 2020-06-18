@@ -44,7 +44,9 @@ class ViewController: UIViewController {
         //        print(reverseList(node.next)!)
 //        DLog(isUnique("abcdee"))
         
-        DLog(self.minSubsequence([4,3,10,9,8]))
+//        DLog(uniqueOccurrences([-3,0,1,-3,1,1,1,-3,10,0]))
+        
+        DLog(self.countCharacters(["cat","bt","hat","tree"], "atach"))
     }
     
     //       104. 二叉树的最大深度
@@ -531,24 +533,24 @@ class ViewController: UIViewController {
         return false
     }
     
-    func reverseList(_ head: ListNode?) -> ListNode? {
-        
-        var pre: ListNode? = nil
-        var cur = head
-        var next: ListNode? = nil
-        ///  每次遍历拿到最后的一个节点
-        while cur != nil {
-            // 把下一个节点存起来
-            next = cur?.next
-            // 覆盖掉下一个节点
-            cur?.next = pre
-            // 把当前节点复制保存起来
-            pre = cur
-            //
-            cur = next
-        }
-        return pre
-    }
+//    func reverseList(_ head: ListNode?) -> ListNode? {
+//
+//        var pre: ListNode? = nil
+//        var cur = head
+//        var next: ListNode? = nil
+//        ///  每次遍历拿到最后的一个节点
+//        while cur != nil {
+//            // 把下一个节点存起来
+//            next = cur?.next
+//            // 覆盖掉下一个节点
+//            cur?.next = pre
+//            // 把当前节点复制保存起来
+//            pre = cur
+//            //
+//            cur = next
+//        }
+//        return pre
+//    }
     
     func hammingWeight(_ n: Int) -> Int {
         if n == 0 {
@@ -1037,6 +1039,196 @@ class ViewController: UIViewController {
             }
         }
         return result
+    }
+    
+    
+//    999. 可以被一步捕获的棋子数
+//    在一个 8 x 8 的棋盘上，有一个白色的车（Rook），用字符 'R' 表示。棋盘上还可能存在空方块，白色的象（Bishop）以及黑色的卒（pawn），分别用字符 '.'，'B' 和 'p' 表示。不难看出，大写字符表示的是白棋，小写字符表示的是黑棋。
+//
+//    车按国际象棋中的规则移动。东，西，南，北四个基本方向任选其一，然后一直向选定的方向移动，直到满足下列四个条件之一：
+//
+//    棋手选择主动停下来。
+//    棋子因到达棋盘的边缘而停下。
+//    棋子移动到某一方格来捕获位于该方格上敌方（黑色）的卒，停在该方格内。
+//    车不能进入/越过已经放有其他友方棋子（白色的象）的方格，停在友方棋子前。
+//    你现在可以控制车移动一次，请你统计有多少敌方的卒处于你的捕获范围内（即，可以被一步捕获的棋子数）。
+//    解题思路 找到车。遍历四个方向
+    typealias Position = (x: Int, y: Int)
+    func numRookCaptures(_ board: [[Character]]) -> Int {
+        let size = board.count
+        var pao = Position(x: 0, y: 0)
+        var bins = [Position]()
+        for x in 0..<size {
+            for y in 0..<size {
+                let item = board[x][y]
+                switch item {
+                case Character("R"):
+                    pao.x = x
+                    pao.y = y
+                case Character("p"):
+                    bins.append(Position(x: x, y: y))
+                default:
+                    continue
+                }
+            }
+        }
+        var ans = 0
+        for bin in bins {
+            var able = true
+            if bin.x == pao.x {
+                let range = (bin.y > pao.y ? (pao.y + 1)..<bin.y : (bin.y + 1)..<pao.y)
+                for y in range {
+                    if board[bin.x][y] != Character(".") {
+                        able = false
+                        break
+                    }
+                }
+            } else if bin.y == pao.y {
+                let range = (bin.x > pao.x ? (pao.x + 1)..<bin.x : (bin.x + 1)..<pao.x)
+                for x in range {
+                    if board[x][bin.y] != Character(".") {
+                        able = false
+                        break
+                    }
+                }
+            } else {
+                able = false
+            }
+            if able {
+                ans += 1
+            }
+        }
+        return ans
+    }
+    
+    
+//    206. 反转链表
+    func reverseList(_ head: ListNode?) -> ListNode? {
+        
+        var pre: ListNode? = nil
+        var cur = head
+        var next: ListNode? = nil
+        ///  每次遍历拿到最后的一个节点
+        while cur != nil {
+            // 把下一个节点存起来
+            next = cur?.next
+            // 覆盖掉下一个节点
+            cur?.next = pre
+            // 把当前节点复制保存起来
+            pre = cur
+            //
+            cur = next
+        }
+        return pre
+    }
+//    1207. 独一无二的出现次数
+      func uniqueOccurrences(_ arr: [Int]) -> Bool {
+            
+            //初始化一个词典，用来存储各个数字的出现次数
+            var CountOfNums = [Int:Int]()
+            
+            //遍历原数组，将数组中的每个元素作为字典的key，每个元素出现的次数作为字典的value插入到字典中
+            for num in arr {
+                
+                if let count = CountOfNums[num] {
+                    CountOfNums.updateValue(count + 1, forKey: num)
+
+                } else {
+                    CountOfNums.updateValue(1, forKey: num)
+                }
+            }
+            
+            //如果原数组中有n个不同的数，那么当且仅当每个数字出现的次数的情况亦为n时返回true
+            let counts = Array(Set(CountOfNums.values))
+            let nums = Array(Set(arr))
+
+            return counts.count == nums.count
+        }
+//    500. 键盘行
+    func findWords(_ words: [String]) -> [String] {
+       
+        let kb1: Set<Character> = Set(["q","w", "e", "r", "t", "y", "u", "i", "o", "p"])
+        let kb2: Set<Character> = Set(["a","s", "d", "f", "g", "h", "j", "k", "l"])
+        let kb3: Set<Character> = Set(["z","x", "c", "v", "b", "n", "m"])
+                
+        var results: [String] = []
+        for word in words {
+            let str = word.lowercased()
+            let wordSet = Set(Array(str))
+            let temp =  wordSet.intersection(kb1).count == wordSet.count ||
+                wordSet.intersection(kb2).count == wordSet.count ||
+                wordSet.intersection(kb3).count == wordSet.count
+            if temp {
+                results.append(word)
+            }
+        }
+        return results
+    }
+    
+//    908. 最小差值 I
+//    输入：words = ["cat","bt","hat","tree"], chars = "atach"
+//    输出：6
+//    解释：
+//    可以形成字符串 "cat" 和 "hat"，所以答案是 3 + 3 = 6。
+    
+    func countCharacters(_ words: [String], _ chars: String) -> Int {
+        
+        var resultString = ""
+        for str in words{
+            var finishWord = true
+            var methodChars = chars
+            for char in str{
+                
+                if let idx = methodChars.firstIndex(of: char){
+                    methodChars.remove(at:idx)
+                }else{
+                    finishWord = false
+                    break
+                }
+            }
+            if finishWord == true{
+                resultString.append(str)
+            }else{
+                finishWord = true
+            }
+        }
+        return resultString.count
+    }
+//    快慢指针可以解决
+//    876. 链表的中间结点
+//     输入：[1,2,3,4,5]
+//     输出：此列表中的结点 3 (序列化形式：[3,4,5])
+//     返回的结点值为 3 。 (测评系统对该结点序列化表述是 [3,4,5])。
+//    [1,2,3,4,5,6]
+//    此列表中的结点 4 (序列化形式：[4,5,6])
+//    由于该列表有两个中间结点，值分别为 3 和 4，我们返回第二个结点。
+//     注意，我们返回了一个 ListNode 类型的对象 ans，这样：
+//     ans.val = 3, ans.next.val = 4, ans.next.next.val = 5, 以及 ans.next.next.next = NULL.
+
+    func middleNode(_ head: ListNode?) -> ListNode? {
+        var fastNode = head
+        var showNode = head
+        while fastNode?.next != nil && showNode?.next != nil{
+            
+            fastNode = fastNode?.next?.next
+            showNode = showNode?.next
+        }
+        return showNode
+    }
+    
+//    905. 按奇偶排序数组
+    func sortArrayByParity(_ A: [Int]) -> [Int] {
+        
+//        给定一个非负整数数组 A，返回一个数组，在该数组中， A 的所有偶数元素之后跟着所有奇数元素。
+        var results: [Int] = []
+        for number in A {
+            if number%2 == 0{
+                results.insert(number, at: 0)
+            }else{
+                results.append(number)
+            }
+        }
+        return results
     }
     
 }
